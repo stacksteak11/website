@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Games — Reign Studios</title>
+<meta name="description" content="Games built by Reign Studios.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="page">
+
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="index.html" aria-label="Reign Studios home">
+      <img class="brand-icon" src="images/rex-icon.png" alt="" width="40" height="40">
+      <span class="brand-text">REIGN<span>STUDIOS</span></span>
+    </a>
+    <div class="links">
+      <a href="games.html" aria-current="page">Games</a>
+      <a href="index.html">Studio</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#careers">Careers</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <section class="games-page wrap">
+    <header class="header">
+      <h1>Made to be played.<br><em>Built to be remembered.</em></h1>
+      <p><span data-stat="games">12</span> games, <span data-stat="visits">382.9M</span> visits and <span data-stat="playing">2,795</span> people playing right now. Every one starts with a loop that feels good in the first minute.</p>
+    </header>
+
+    <div class="filters" aria-label="Filter games">
+      <button class="active" data-filter="all">All games <small></small></button>
+      <button data-filter="brainrot">Brainrot <small></small></button>
+      <button data-filter="tycoon">Tycoon <small></small></button>
+      <button data-filter="horror">Horror <small></small></button>
+      <button data-filter="roleplay">Roleplay <small></small></button>
+      <button data-filter="action">Action <small></small></button>
+      <button data-filter="sports">Sports <small></small></button>
+    </div>
+
+    <div class="game-list" id="all-games"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-sky" aria-hidden="true">
+      <span class="arc"></span><span class="arc-inner"></span><span class="beam"></span>
+      <span class="star s1"></span><span class="star s2"></span><span class="star s3"></span>
+    </div>
+    <div class="footer-content">
+      <a class="brand" href="index.html" aria-label="Reign Studios home">
+        <img class="brand-icon" src="images/rex-icon.png" alt="" width="40" height="40">
+        <span class="brand-text">REIGN<span>STUDIOS</span></span>
+      </a>
+      <p>Small team. Big worlds.<br>Games with a bit of bite.</p>
+      <div class="footer-links">
+        <a href="games.html">Games</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#partners">Partners</a>
+        <a href="index.html#careers">Careers</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">Roblox</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Reign Studios</span>
+      <span>Building on Roblox</span>
+    </div>
+  </footer>
+
+</main>
+
+<script src="games.js"></script>
+<script>
+  const list = document.getElementById('all-games');
+  const buttons = document.querySelectorAll('.filters button');
+  const byVisits = [...GAMES].sort((a, b) => b.visits - a.visits);
+
+  buttons.forEach(btn => {
+    const f = btn.dataset.filter;
+    const count = f === 'all' ? GAMES.length : GAMES.filter(g => g.filters.includes(f)).length;
+    btn.querySelector('small').textContent = count;
+  });
+
+  function show(f) {
+    // re-render so the left/right image layout stays alternating after filtering
+    renderGames(list, f === 'all' ? byVisits : byVisits.filter(g => g.filters.includes(f)));
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      show(btn.dataset.filter);
+      updateStats();
+    });
+  });
+
+  show('all');
+  updateStats();
+  refreshLive();
+</script>
+</body>
+</html>

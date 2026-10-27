@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Reign Studios</title>
+<meta name="description" content="Get in touch with Reign Studios.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="page">
+
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="index.html" aria-label="Reign Studios home">
+      <img class="brand-icon" src="images/rex-icon.png" alt="" width="40" height="40">
+      <span class="brand-text">REIGN<span>STUDIOS</span></span>
+    </a>
+    <div class="links">
+      <a href="games.html">Games</a>
+      <a href="index.html">Studio</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#careers">Careers</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </div>
+  </nav>
+
+  <section class="contact wrap">
+    <form id="contact-form" novalidate>
+      <header class="form-header">
+        <h1>Say hi to <span>Reign.</span></h1>
+        <p>Got a question, an idea or a bug that's driving you mad? Drop us a message.</p>
+      </header>
+
+      <div class="fields">
+        <div class="two-col">
+          <label><span>Name</span>
+            <input type="text" name="name" placeholder="Your name" minlength="2" maxlength="80" required>
+          </label>
+          <label><span>Email</span>
+            <input type="email" name="email" placeholder="you@example.com" maxlength="120" required>
+          </label>
+        </div>
+        <div class="two-col">
+          <label><span>Roblox or Discord username <em>Optional</em></span>
+            <input type="text" name="handle" placeholder="Your username" maxlength="100">
+          </label>
+          <div class="field"><span>Topic</span>
+            <span class="select" id="topic">
+              <input type="hidden" name="topic" value="">
+              <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span>Choose a topic</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <span class="select-menu" role="listbox">
+                <button type="button" role="option">General question</button>
+                <button type="button" role="option">Game feedback</button>
+                <button type="button" role="option">Bug report</button>
+                <button type="button" role="option">Creator collab</button>
+                <button type="button" role="option">Business partnership</button>
+                <button type="button" role="option">Jobs</button>
+                <button type="button" role="option">Something else</button>
+              </span>
+            </span>
+          </div>
+        </div>
+        <label><span>Message</span>
+          <textarea name="message" placeholder="Tell us what's on your mind..." minlength="20" maxlength="1800" rows="5" required></textarea>
+        </label>
+        <div class="form-footer">
+          <p class="feedback" aria-live="polite"></p>
+          <button type="submit">Send message
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-sky" aria-hidden="true">
+      <span class="arc"></span><span class="arc-inner"></span><span class="beam"></span>
+      <span class="star s1"></span><span class="star s2"></span><span class="star s3"></span>
+    </div>
+    <div class="footer-content">
+      <a class="brand" href="index.html" aria-label="Reign Studios home">
+        <img class="brand-icon" src="images/rex-icon.png" alt="" width="40" height="40">
+        <span class="brand-text">REIGN<span>STUDIOS</span></span>
+      </a>
+      <p>Small team. Big worlds.<br>Games with a bit of bite.</p>
+      <div class="footer-links">
+        <a href="games.html">Games</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#partners">Partners</a>
+        <a href="index.html#careers">Careers</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">Roblox</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Reign Studios</span>
+      <span>Building on Roblox</span>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  // topic dropdown
+  const select = document.getElementById('topic');
+  const trigger = select.querySelector('.select-trigger');
+  const hidden = select.querySelector('input');
+  const options = select.querySelectorAll('[role=option]');
+
+  function setOpen(open) {
+    select.classList.toggle('open', open);
+    trigger.setAttribute('aria-expanded', open);
+  }
+  trigger.addEventListener('click', () => setOpen(!select.classList.contains('open')));
+  options.forEach(opt => {
+    opt.addEventListener('click', () => {
+      options.forEach(o => o.setAttribute('aria-selected', 'false'));
+      opt.setAttribute('aria-selected', 'true');
+      hidden.value = opt.textContent;
+      trigger.querySelector('span').textContent = opt.textContent;
+      trigger.classList.add('chosen');
+      setOpen(false);
+      trigger.focus();
+    });
+  });
+  document.addEventListener('click', e => { if (!select.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+
+  // form
+  // TODO: this only checks the fields. To actually receive messages, send them to a
+  // form service (Formspree, Basin, etc.) or your own backend inside the submit handler.
+  const form = document.getElementById('contact-form');
+  const feedback = form.querySelector('.feedback');
+  const okIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="m8.5 12.5 2.5 2.5 4.5-5"/></svg>';
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    feedback.classList.remove('error');
+    if (!form.checkValidity()) {
+      feedback.classList.add('error');
+      feedback.textContent = 'Please add your name, a valid email and a message of at least 20 characters.';
+      return;
+    }
+    if (!hidden.value) {
+      feedback.classList.add('error');
+      feedback.textContent = 'Pick a topic so we know who should reply.';
+      return;
+    }
+    feedback.innerHTML = okIcon + 'Thanks! We’ll get back to you soon.';
+    form.reset();
+    hidden.value = '';
+    trigger.querySelector('span').textContent = 'Choose a topic';
+    trigger.classList.remove('chosen');
+    options.forEach(o => o.setAttribute('aria-selected', 'false'));
+  });
+</script>
+</body>
+</html>
